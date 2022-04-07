@@ -10,9 +10,17 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     private TMP_InputField playerNameInputField = null;
 
-    private void Start()
+    [SerializeField]
+    private ResolutionSetter resolutionSetter = null;
+
+    private void Awake()
     {
-        Screen.SetResolution(1920 , 1080, false);
+        resolutionSetter.SetFullScreen(PlayerPrefs.GetInt("isFullScreen", 0) == 1 ? true : false);
+        resolutionSetter.SetResolution(PlayerPrefs.GetInt("Resolution", 2));
+
+        Application.targetFrameRate = 300;
+
+        PhotonNetwork.SendRate = 60;
     }
 
     public void StartLaunching()

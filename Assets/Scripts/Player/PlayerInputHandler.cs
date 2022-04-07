@@ -12,6 +12,8 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks
 
     public bool IsRun = false;
     public bool IsJump = false;
+    public bool IsNormalAttack = false;
+    public bool IsSkillAttack = false;
 
     public float MouseXInput = 1f;
     public float MouseYInput = 1f;
@@ -52,6 +54,9 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks
         if(Input.GetKeyUp(KeyCode.W)) IsRun = false;
 
         IsJump = Input.GetKeyDown(KeyCode.Space);
+
+        IsNormalAttack = Input.GetMouseButtonDown(0);
+        IsSkillAttack = Input.GetMouseButtonDown(1);
 
         PlayerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
     }

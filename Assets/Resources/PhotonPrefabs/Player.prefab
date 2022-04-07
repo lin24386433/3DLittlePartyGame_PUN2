@@ -107,6 +107,9 @@ GameObject:
   - component: {fileID: 477180688530331670}
   - component: {fileID: 477180688530331655}
   - component: {fileID: -4027102495868177154}
+  - component: {fileID: 8043810822562964787}
+  - component: {fileID: -3288007274726749852}
+  - component: {fileID: 5531753445042781467}
   - component: {fileID: 477180688530331667}
   m_Layer: 6
   m_Name: Player
@@ -176,10 +179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2405995e10f29224fb5516660f1e650d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PhotonView: {fileID: 477180688530331667}
   Rigidbody: {fileID: 477180688530331657}
   Animator: {fileID: 8475076177405678153}
   IsGround: 0
+  IsHurt: 0
 --- !u!114 &477180688530331671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +199,8 @@ MonoBehaviour:
   PlayerMovementInput: {x: 0, y: 0, z: 0}
   IsRun: 0
   IsJump: 0
+  IsNormalAttack: 0
+  IsSkillAttack: 0
   MouseXInput: 1
   MouseYInput: 1
   mouseXSensitivity: 3
@@ -213,7 +218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 477180688530331669}
-  jumpHandler: {fileID: 477180688530331670}
   inputHandler: {fileID: 477180688530331671}
   cameraPos: {fileID: 477180688906201782}
   stepRayUpper: {fileID: 477180688369082671}
@@ -261,7 +265,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 477180688530331669}
-  inputHandler: {fileID: 477180688530331671}
 --- !u!114 &-4027102495868177154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +275,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2259e1d1e82a8d74ba5dc4dd3f260c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModel: {fileID: 477180688530331669}
+--- !u!114 &8043810822562964787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477180688530331660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 991870bc8aea9274497968ef099e1fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputHandler: {fileID: 477180688530331671}
+  skillHandler: {fileID: -3288007274726749852}
+  shootPoint: {fileID: 8540931265035287328}
+--- !u!114 &-3288007274726749852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477180688530331660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a713f371d5948b4587d8f0ad83f9030, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillSOs:
+  - {fileID: 11400000, guid: 0da6021f337d02d4bba09203f0dbf38f, type: 2}
+  - {fileID: 11400000, guid: 76601c7b8c2ee3e48bb8d7518da5eb02, type: 2}
+  - {fileID: 11400000, guid: d9002401d7c83de438fc5a4e4d122e3f, type: 2}
+--- !u!114 &5531753445042781467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477180688530331660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a01a36a3ca1aca4e90128fc6b053478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 477180688530331669}
@@ -290,10 +337,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 477180688530331669}
   - {fileID: -4027102495868177154}
   - {fileID: 8475076177398392440}
   sceneViewId: 0
@@ -325,9 +373,40 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8540931265035287328}
   m_Father: {fileID: 477180688530331659}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7060240043630322760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8540931265035287328}
+  m_Layer: 6
+  m_Name: Shoot Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8540931265035287328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7060240043630322760}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0.679}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 477180688906201782}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8475076177398333509
 GameObject:
@@ -4651,7 +4730,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8475076177398392441}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
   m_Name: 

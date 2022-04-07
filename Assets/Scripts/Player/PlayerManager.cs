@@ -12,12 +12,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-		CreateController();
+		if(photonView.IsMine)
+			CreateController();
 	}
 
 	void CreateController()
 	{
-		playerObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), new Vector3(0f, 5f, 0f), Quaternion.identity, 0, new object[] { photonView.ViewID });
+		var spawnPoint = SpawnManager.Instance.GetRandomSpawnPoint();
+		
+		playerObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "Player"), spawnPoint.position, spawnPoint.rotation, 0, new object[] { photonView.ViewID });
 	}
 
 	public void Die()

@@ -58,7 +58,7 @@ public class PlayerJumpHandler : MonoBehaviourPunCallbacks
 
     void Jump()
     {
-        playerModel.Rigidbody.velocity = new Vector3(playerModel.Rigidbody.velocity.x, 0f, playerModel.Rigidbody.velocity.z);
+        playerModel.Velocity = new Vector3(playerModel.Velocity.x, 0f, playerModel.Velocity.z);
 
         playerModel.Rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }

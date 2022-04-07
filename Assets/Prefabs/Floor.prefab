@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5166941220937027623}
   - component: {fileID: 5166941220937027616}
   - component: {fileID: 5166941220937027617}
-  - component: {fileID: -2227709227807003869}
+  - component: {fileID: 1732098668192873676}
   m_Layer: 7
   m_Name: Floor
   m_TagString: Untagged
@@ -96,7 +96,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2227709227807003869
+--- !u!114 &1732098668192873676
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,16 +105,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5166941220937027619}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 5376227f9e45b0f4a9c474428d21f2d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  _index: 0
+  _floorSpawner: {fileID: 0}

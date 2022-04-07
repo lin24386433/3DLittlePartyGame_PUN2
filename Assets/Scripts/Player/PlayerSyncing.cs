@@ -27,7 +27,7 @@ public class PlayerSyncing : MonoBehaviourPunCallbacks, IPunObservable
             //We own this player: send the others our data
             stream.SendNext(playerModel.transform.position);
             stream.SendNext(playerModel.transform.rotation);
-            stream.SendNext(playerModel.Rigidbody.velocity);
+            stream.SendNext(playerModel.Velocity);
             stream.SendNext(playerModel.Rigidbody.angularVelocity);
         }
         else
@@ -56,11 +56,16 @@ public class PlayerSyncing : MonoBehaviourPunCallbacks, IPunObservable
             currentTime += Time.deltaTime;
 
             Vector3 lagCompensationPos = new Vector3(timeToReachGoal * latestVelocity.x, timeToReachGoal * latestVelocity.y, timeToReachGoal * latestVelocity.z);
-            Vector3 lagCompensationRot = new Vector3(timeToReachGoal * latestAngularVelocity.x, timeToReachGoal * latestAngularVelocity.y, timeToReachGoal * latestAngularVelocity.z);
+            Quaternion lagCompensationRot = Quaternion.Euler(new Vector3(timeToReachGoal * latestAngularVelocity.x, timeToReachGoal * latestAngularVelocity.y, timeToReachGoal * latestAngularVelocity.z));
 
             //Update remote player 
             playerModel.transform.position = Vector3.Lerp(positionAtLastPacket, latestPos + lagCompensationPos, (float)(currentTime / timeToReachGoal));
-            playerModel.transform.rotation = Quaternion.Lerp(rotationAtLastPacket, latestRot * Quaternion.Euler(lagCompensationRot), (float)(currentTime / timeToReachGoal));
+
+            Quaternion targetRot = latestRot * lagCompensationRot;
+
+            if (Quaternion.Dot(targetRot, targetRot) < Quaternion.kEpsilon)
+                targetRot = Quaternion.identity;
+            playerModel.transform.rotation = Quaternion.Lerp(rotationAtLastPacket, targetRot, (float)(currentTime / timeToReachGoal));
         }
     }
 }

@@ -8,21 +8,18 @@ public class PlayerAnimationHandler : MonoBehaviourPunCallbacks
     [SerializeField]
     private PlayerModel playerModel = null;
 
-    [SerializeField]
-    private PlayerInputHandler inputHandler = null;
-
     float idleTime = 0f;
+
+    float groundVelocity = 0f;
 
     private void Update()
     {
-        if (!photonView.IsMine) return;
-
-        playerModel.Animator.SetFloat("XInput", inputHandler.PlayerMovementInput.x);
-        playerModel.Animator.SetFloat("YInput", inputHandler.PlayerMovementInput.z);
+        playerModel.Animator.SetFloat("XInput", transform.InverseTransformDirection(playerModel.Velocity).x);
+        playerModel.Animator.SetFloat("YInput", transform.InverseTransformDirection(playerModel.Velocity).z);
 
         playerModel.Animator.SetBool("isGround", playerModel.IsGround);
 
-        float groundVelocity = new Vector2(playerModel.Rigidbody.velocity.x, playerModel.Rigidbody.velocity.z).magnitude;
+        groundVelocity = new Vector2(playerModel.Velocity.x, playerModel.Velocity.z).magnitude;
 
         if (playerModel.IsGround)
         {

@@ -7,8 +7,14 @@ public class FPSDisplay : MonoBehaviour
 {
     [SerializeField] Text fpsDisplay = null;
 
+    float lastUpdateTime = 0f;
+
     private void Update()
     {
-        fpsDisplay.text = (1f / Time.deltaTime).ToString("0.0");
+        if (Time.time - lastUpdateTime >= .2f)
+        {
+            fpsDisplay.text = (1f / Time.deltaTime).ToString("0.0");
+            lastUpdateTime = Time.time;
+        }
     }
 }

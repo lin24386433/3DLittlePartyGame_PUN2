@@ -9,9 +9,6 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
     private PlayerModel playerModel = null;
 
     [SerializeField]
-    private PlayerJumpHandler jumpHandler = null;
-
-    [SerializeField]
     private PlayerInputHandler inputHandler = null;
 
     [SerializeField]
@@ -53,6 +50,7 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (!photonView.IsMine) return;
+        if (playerModel.IsHurt) return;
 
         moveSpeed = inputHandler.IsRun ? runSpeed : walkSpeed;
         StepClimb();
@@ -63,6 +61,9 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
         if (!photonView.IsMine) return;
 
         Rotate();
+
+        if (playerModel.IsHurt) return;
+        
         Move();
         SpeedControl();
         DragControl();
@@ -83,20 +84,20 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
 
         Vector3 moveVector = transform.TransformDirection(inputHandler.PlayerMovementInput) * speed;
 
-        playerModel.Rigidbody.velocity = new Vector3(moveVector.x, playerModel.Rigidbody.velocity.y, moveVector.z);
+        playerModel.Velocity = new Vector3(moveVector.x, playerModel.Velocity.y, moveVector.z);
 
         if (!playerModel.IsGround)
-            playerModel.Rigidbody.AddForce(playerModel.Rigidbody.velocity * airMultiplier, ForceMode.Force);
+            playerModel.Rigidbody.AddForce(playerModel.Velocity * airMultiplier, ForceMode.Force);
     }
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(playerModel.Rigidbody.velocity.x, 0f, playerModel.Rigidbody.velocity.z);
+        Vector3 flatVel = new Vector3(playerModel.Velocity.x, 0f, playerModel.Velocity.z);
 
         if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            playerModel.Rigidbody.velocity = new Vector3(limitedVel.x, playerModel.Rigidbody.velocity.y, limitedVel.z);
+            playerModel.Velocity = new Vector3(limitedVel.x, playerModel.Velocity.y, limitedVel.z);
         }
     }
 
@@ -119,7 +120,7 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
     void StepClimb()
     {
         if (inputHandler.PlayerMovementInput == Vector3.zero) return;
-        if (playerModel.Rigidbody.velocity.y <= -.5f) return;
+        if (playerModel.Velocity.y <= -.5f) return;
 
         RaycastHit hitLower;
         if (Physics.Raycast(stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.1f))
