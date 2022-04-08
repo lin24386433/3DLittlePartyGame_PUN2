@@ -11,9 +11,9 @@ public class FPSDisplay : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time - lastUpdateTime >= .2f)
+        if (Time.time - lastUpdateTime >= .1f)
         {
-            fpsDisplay.text = (1f / Time.deltaTime).ToString("0.0");
+            fpsDisplay.text = "FPS : " + (1f / Time.deltaTime).ToString("0.0");
             lastUpdateTime = Time.time;
         }
     }
