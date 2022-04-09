@@ -6,8 +6,12 @@ using UnityEngine;
 public class SkillSO : ScriptableObject
 {
     public string SkillName = "";
+    [TextArea(10, 10)]
     public string SkillDescription = "";
     public Texture2D SkillIcon = null;
 
     public GameObject SkillObj = null;
+
+    public bool needTartgetToTrigger = false;
+    public bool shootable = false;
 }

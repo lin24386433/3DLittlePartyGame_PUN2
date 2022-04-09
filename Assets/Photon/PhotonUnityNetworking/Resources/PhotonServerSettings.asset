@@ -45,6 +45,12 @@ MonoBehaviour:
   - ResetAllFloorRPC
   - HurtRPC
   - EnableSyncingRPC
+  - DestroyFloorRPC
+  - DestroyFloorsRPC
+  - RecoverFloorRPC
+  - RecoverFloorsRPC
+  - SetSelfActiveRPC
+  - SetPositionRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -14,6 +14,7 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks
     public bool IsJump = false;
     public bool IsNormalAttack = false;
     public bool IsSkillAttack = false;
+    public int SelectedSkillIndex = 0;
 
     public float MouseXInput = 1f;
     public float MouseYInput = 1f;
@@ -59,5 +60,35 @@ public class PlayerInputHandler : MonoBehaviourPunCallbacks
         IsSkillAttack = Input.GetMouseButtonDown(1);
 
         PlayerMovementInput = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectedSkillIndex = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectedSkillIndex = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectedSkillIndex = 2;
+        }
+
+        if(Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            SelectedSkillIndex++;
+            if(SelectedSkillIndex >= 3)
+            {
+                SelectedSkillIndex = 0;
+            }
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+        {
+            SelectedSkillIndex--;
+            if (SelectedSkillIndex <= -1)
+            {
+                SelectedSkillIndex = 2;
+            }
+        }
     }
 }

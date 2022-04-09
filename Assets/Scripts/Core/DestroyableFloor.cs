@@ -6,17 +6,17 @@ using UnityEngine;
 public class DestroyableFloor : MonoBehaviour
 {
     public int Index;
-    [SerializeField] FloorSpawner _floorSpawner;
+    [SerializeField] FloorManager floorManager;
 
-    public void Init(int index, FloorSpawner floorSpawner)
+    public void Setup(int index, FloorManager floorManager)
     {
         Index = index;
-        _floorSpawner = floorSpawner;
+        this.floorManager = floorManager;
     }
 
     [ContextMenu("DestroySelf")]
     public void DestroySelf()
     {
-        _floorSpawner.DestroyChild(Index);
+        floorManager.DestroyFloor(Index);
     }
 }

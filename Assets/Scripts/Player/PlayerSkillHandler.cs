@@ -7,38 +7,93 @@ using UnityEngine;
 public class PlayerSkillHandler : MonoBehaviourPunCallbacks
 {
     [SerializeField]
-    private SkillSO[] skillSOs = default;
+    private PlayerInputHandler inputHandler = null;
+
+    [SerializeField]
+    private SkillField[] skillFields = default;
 
     int selectedSkillIndex = 0;
+
+    private void Start()
+    {
+        if (!photonView.IsMine) return;
+
+        UIManager.Instance.SkillFieldsDisplay.SetSelectedSkill(selectedSkillIndex);
+        UpdateUI();
+    }
 
     private void Update()
     {
         if (!photonView.IsMine) return;
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(inputHandler.SelectedSkillIndex != selectedSkillIndex)
         {
-            SetSelectedSkillIndex(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetSelectedSkillIndex(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetSelectedSkillIndex(2);
+            SetSelectedSkillIndex(inputHandler.SelectedSkillIndex);
         }
     }
 
     public void SetSelectedSkillIndex(int value)
     {
+        if (!photonView.IsMine) return;
+
         selectedSkillIndex = value;
+        UIManager.Instance.SkillFieldsDisplay.SetSelectedSkill(selectedSkillIndex);
+        UpdateUI();
     }
 
     public void UseSkill(Transform skillTriggerTransform)
     {
-        if(skillSOs[selectedSkillIndex] != null)
+        if (!photonView.IsMine) return;
+
+        if (skillFields[selectedSkillIndex].skillSO != null && skillFields[selectedSkillIndex].Amount > 0)
         {
-            PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillSOs[selectedSkillIndex].SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
+            if(skillFields[selectedSkillIndex].skillSO.shootable)
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
+            else
+                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), transform.position, transform.rotation, 0);
+
+            skillFields[selectedSkillIndex].Amount--;
+
+            if(skillFields[selectedSkillIndex].Amount == 0)
+            {
+                skillFields[selectedSkillIndex].skillSO = null;
+            }
+            UpdateUI();
         }
+    }
+
+    public bool AddSkill(SkillSO skillSO, int amount)
+    {
+        if (!photonView.IsMine) return false;
+
+        for (int i = 0; i < skillFields.Length; i++)
+        {
+            if(skillFields[i].skillSO == skillSO)
+            {
+                skillFields[i].Amount += amount;
+                UpdateUI();
+                return true;
+            }
+        }
+        for (int i = 0; i < skillFields.Length; i++)
+        {
+            if (skillFields[i].skillSO == null)
+            {
+                skillFields[i].skillSO = skillSO;
+                skillFields[i].Amount = amount;
+                UpdateUI();
+                return true;
+            }
+        }
+
+        UpdateUI();
+        return false;
+    }
+
+    void UpdateUI()
+    {
+        if (!photonView.IsMine) return;
+
+        UIManager.Instance.SkillFieldsDisplay.SetSkillFields(skillFields);
     }
 }

@@ -61,12 +61,12 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
         if (!photonView.IsMine) return;
 
         Rotate();
+        DragControl();
 
         if (playerModel.IsHurt) return;
         
         Move();
         SpeedControl();
-        DragControl();
         StepClimb();
     }
 
@@ -103,7 +103,7 @@ public class PlayerMoveHandler : MonoBehaviourPunCallbacks
 
     private void DragControl()
     {
-        if (playerModel.IsGround)
+        if (playerModel.IsGround && !playerModel.IsHurt)
             playerModel.Rigidbody.drag = groundDrag;
         else
             playerModel.Rigidbody.drag = 0;

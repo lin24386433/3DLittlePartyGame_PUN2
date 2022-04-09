@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: ShinraTensei
   SkillDescription: 
-  SkillIcon: {fileID: 0}
+  SkillIcon: {fileID: 2800000, guid: c3c9cd7caad0504409223c87119fdfd3, type: 3}
   SkillObj: {fileID: 6677782740750169009, guid: 0c06f94f9b37b744aa322df5a7e05c39, type: 3}
+  needTartgetToTrigger: 0
+  shootable: 0

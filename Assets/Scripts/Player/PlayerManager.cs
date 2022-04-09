@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
 	GameObject playerObj = null;
 
-	public bool isDead = false;
+	public int KillsAmount = 0;
+	public int DeathAmount = 0;
+	public int PointAmount = 0;
 
     private void Start()
     {

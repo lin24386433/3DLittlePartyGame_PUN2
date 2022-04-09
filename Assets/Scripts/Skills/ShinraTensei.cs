@@ -20,7 +20,17 @@ public class ShinraTensei : MonoBehaviourPunCallbacks
         if (!photonView.IsMine) return;
 
         Trigger();
-        Invoke(nameof(DestorySelf), 1f);
+        Invoke(nameof(DestorySelf), .2f);
+    }
+
+    private void Update()
+    {
+        transform.localScale += new Vector3(2, 2, 2) * Time.deltaTime * force;
+
+        if (transform.localScale.x <= 0)
+        {
+            transform.localScale = Vector3.zero;
+        }
     }
 
     private void DestorySelf()
@@ -38,7 +48,7 @@ public class ShinraTensei : MonoBehaviourPunCallbacks
             {
                 if (photonView.Owner == hurtHandler.photonView.Owner) continue;
 
-                hurtHandler.Hurt(transform.position, force, 1f);
+                hurtHandler.Hurt(photonView.Owner, transform.position, force, 1f);
             }
         }
     }
