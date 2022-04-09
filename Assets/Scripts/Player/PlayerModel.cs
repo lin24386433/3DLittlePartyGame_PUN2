@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerModel : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -18,12 +19,17 @@ public class PlayerModel : MonoBehaviourPunCallbacks, IPunObservable
 
     private PlayerManager playerManager = null;
 
+    [SerializeField]
+    private TMP_Text playerNameTxt = null;
+
     private void Start()
     {
         playerManager = PhotonView.Find((int)photonView.InstantiationData[0]).GetComponent<PlayerManager>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        playerNameTxt.text = photonView.Owner.NickName;
     }
 
     private void Update()
