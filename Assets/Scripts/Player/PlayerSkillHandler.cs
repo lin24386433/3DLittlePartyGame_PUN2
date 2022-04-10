@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,11 +7,13 @@ using UnityEngine;
 
 public class PlayerSkillHandler : MonoBehaviourPunCallbacks
 {
+    public event Action<SkillField[]> OnSKillFieldsChanged = null;
+
     [SerializeField]
     private PlayerInputHandler inputHandler = null;
 
     [SerializeField]
-    private SkillField[] skillFields = default;
+    private SkillField[] skillFields = new SkillField[3];
 
     int selectedSkillIndex = 0;
 
@@ -18,8 +21,7 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine) return;
 
-        UIManager.Instance.SkillFieldsDisplay.SetSelectedSkill(selectedSkillIndex);
-        UpdateUI();
+        OnSKillFieldsChanged?.Invoke(skillFields);
     }
 
     private void Update()
@@ -37,8 +39,6 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
         if (!photonView.IsMine) return;
 
         selectedSkillIndex = value;
-        UIManager.Instance.SkillFieldsDisplay.SetSelectedSkill(selectedSkillIndex);
-        UpdateUI();
     }
 
     public void UseSkill(Transform skillTriggerTransform)
@@ -58,7 +58,7 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
             {
                 skillFields[selectedSkillIndex].skillSO = null;
             }
-            UpdateUI();
+            OnSKillFieldsChanged?.Invoke(skillFields);
         }
     }
 
@@ -71,7 +71,7 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
             if(skillFields[i].skillSO == skillSO)
             {
                 skillFields[i].Amount += amount;
-                UpdateUI();
+                OnSKillFieldsChanged?.Invoke(skillFields);
                 return true;
             }
         }
@@ -81,19 +81,11 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
             {
                 skillFields[i].skillSO = skillSO;
                 skillFields[i].Amount = amount;
-                UpdateUI();
+                OnSKillFieldsChanged?.Invoke(skillFields);
                 return true;
             }
         }
 
-        UpdateUI();
         return false;
-    }
-
-    void UpdateUI()
-    {
-        if (!photonView.IsMine) return;
-
-        UIManager.Instance.SkillFieldsDisplay.SetSkillFields(skillFields);
     }
 }

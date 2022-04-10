@@ -33,7 +33,7 @@ public class PlayerAnimationHandler : MonoBehaviourPunCallbacks
                     playerModel.Animator.SetBool("isRun", false);
                 }
             }
-            else if (groundVelocity > 5f)
+            else if (groundVelocity > 7f)
             {
                 idleTime = 0f;
                 playerModel.Animator.SetBool("isRun", true);

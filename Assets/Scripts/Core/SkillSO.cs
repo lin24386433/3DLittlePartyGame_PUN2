@@ -14,4 +14,5 @@ public class SkillSO : ScriptableObject
 
     public bool needTartgetToTrigger = false;
     public bool shootable = false;
+    public int GiveAmount = 1;
 }

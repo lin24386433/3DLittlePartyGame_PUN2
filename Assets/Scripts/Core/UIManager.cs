@@ -8,6 +8,10 @@ public class UIManager : MonoBehaviour
 
     public SkillFieldsDisplay SkillFieldsDisplay = null;
 
+    public PauseMenu PauseMenu = null;
+
+    public ScoreBoard ScoreBoard = null;
+
     private void Awake()
     {
         if (Instance == null)

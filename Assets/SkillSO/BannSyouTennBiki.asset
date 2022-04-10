@@ -18,3 +18,4 @@ MonoBehaviour:
   SkillObj: {fileID: 6677782740750169009, guid: 6f83d9957d3887445ab4049605660908, type: 3}
   needTartgetToTrigger: 0
   shootable: 0
+  GiveAmount: 3

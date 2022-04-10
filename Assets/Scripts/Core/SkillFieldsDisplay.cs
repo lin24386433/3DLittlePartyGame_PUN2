@@ -6,8 +6,8 @@ using TMPro;
 
 public class SkillFieldsDisplay : MonoBehaviour
 {
-    public int selectedSkillIndex = 0;
-    public int skillAmount = 0;
+    public int SelectedSkillIndex { get; private set; }
+    public int SkillAmount = 3;
 
     [SerializeField]
     private SkillField[] skillFields = default;
@@ -47,11 +47,11 @@ public class SkillFieldsDisplay : MonoBehaviour
 
     public void SetSelectedSkill(int selectedIndex)
     {
-        selectedSkillIndex = selectedIndex;
+        SelectedSkillIndex = selectedIndex;
 
-        for(int i = 0; i < skillAmount; i++)
+        for(int i = 0; i < SkillAmount; i++)
         {
-            if(selectedSkillIndex == i)
+            if(selectedIndex == i)
             {
                 fieldImages[i].color = selectedColor;
             }

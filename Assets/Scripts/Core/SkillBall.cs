@@ -27,6 +27,7 @@ public class SkillBall : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             randomResetTime = Random.Range(randomResetTimeBoundary.x, randomResetTimeBoundary.y);
+            RespawnSelf();
         }
     }
 
@@ -61,19 +62,6 @@ public class SkillBall : MonoBehaviourPunCallbacks
         transform.position = new Vector3(x, y, z);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.TryGetComponent<PlayerSkillHandler>(out PlayerSkillHandler playerSkillHandler))
-        {
-            int randomSkillSOIndex = Random.Range(0, skillSOs.Length);
-
-            bool isAddSuccessfully = playerSkillHandler.AddSkill(skillSOs[randomSkillSOIndex], 10);
-
-            if (isAddSuccessfully)
-                SetSelfActive(false);
-        }
-    }
-
     void SetSelfActive(bool active)
     {
         photonView.RPC(nameof(SetSelfActiveRPC), RpcTarget.All, active);
@@ -84,5 +72,20 @@ public class SkillBall : MonoBehaviourPunCallbacks
     {
         meshRenderer.enabled = active;
         skillCollider.enabled = active;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (GamePlayManager.Instance.State != GamePlayManager.GameState.Gaming) return;
+
+        if (other.TryGetComponent<PlayerSkillHandler>(out PlayerSkillHandler playerSkillHandler))
+        {
+            int randomSkillSOIndex = Random.Range(0, skillSOs.Length);
+
+            bool isAddSuccessfully = playerSkillHandler.AddSkill(skillSOs[randomSkillSOIndex], skillSOs[randomSkillSOIndex].GiveAmount);
+
+            if (isAddSuccessfully)
+                SetSelfActive(false);
+        }
     }
 }

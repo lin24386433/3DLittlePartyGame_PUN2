@@ -51,17 +51,31 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 
     void SetState(GameState state)
     {
+        State = state;
+
         if (PhotonNetwork.IsMasterClient)
         {
             CustomeValue = new Hashtable();
 
-            State = state;
             stateStartTime = PhotonNetwork.Time;
 
             CustomeValue.Add("GameState", State);
             CustomeValue.Add("StateStartTime", stateStartTime);
 
             PhotonNetwork.CurrentRoom.SetCustomProperties(CustomeValue);
+        }
+
+        switch (state)
+        {
+            case GameState.CountDown:
+                CountDownInit();
+                break;
+            case GameState.Gaming:
+                GamingInit();
+                break;
+            case GameState.Ended:
+                EndedInit();
+                break;
         }
     }
 
@@ -81,6 +95,63 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private void CountDownInit()
+    {
+
+    }
+
+    private void GamingInit()
+    {
+        systemMessage.ShowMessages($"Start!!");
+    }
+
+    private void EndedInit()
+    {
+        systemMessage.ShowMessages($"Game Over!!");
+
+        Invoke(nameof(ShowWinner), 1.5f);
+    }
+
+    void ShowWinner()
+    {
+        int winnerIndex = 0;
+
+        int maxPoint = 0;
+
+        for(int i = 0; i < playersInRoom.Length; i++)
+        {
+            int temp = 0;
+
+            if (playersInRoom[i].CustomProperties.ContainsKey("Points"))
+                temp = (int)playersInRoom[i].CustomProperties["Points"];
+
+            if(temp > maxPoint)
+            {
+                winnerIndex = i;
+                maxPoint = temp;
+            }
+        }
+
+        systemMessage.ShowMessages($"Winner is {playersInRoom[winnerIndex].NickName}");
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Invoke(nameof(Restart), 5f);
+        }
+    }
+
+    void Restart()
+    {
+        Hashtable hash = new Hashtable();
+        hash.Add("Points", 0);
+        for (int i = 0; i < playersInRoom.Length; i++)
+        {
+            playersInRoom[i].SetCustomProperties(hash);
+        }
+
+        SetState(GameState.CountDown);
+    }
+
     private void CountDown()
     {
         countDownTimer = (PhotonNetwork.Time - stateStartTime);
@@ -90,6 +161,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             if(countDownTimer >= countDownTime)
             {
                 SetState(GameState.Gaming);
+                return;
             }
         }
 
@@ -105,6 +177,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
             if (roundTimer >= roundTime)
             {
                 SetState(GameState.Ended);
+                return;
             }
         }
 
@@ -123,7 +196,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient) return;
 
-        State = (GameState)int.Parse(propertiesThatChanged["GameState"].ToString());
+        SetState((GameState)int.Parse(propertiesThatChanged["GameState"].ToString()));
         stateStartTime = double.Parse(propertiesThatChanged["StateStartTime"].ToString());
     }
 
