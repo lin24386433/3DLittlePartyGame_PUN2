@@ -26,16 +26,6 @@ public class ShinraTensei : MonoBehaviourPunCallbacks
         Invoke(nameof(DestorySelf), .2f);
     }
 
-    private void Update()
-    {
-        transform.localScale += new Vector3(2, 2, 2) * Time.deltaTime * force;
-
-        if (transform.localScale.x <= 0)
-        {
-            transform.localScale = Vector3.zero;
-        }
-    }
-
     private void DestorySelf()
     {
         PhotonNetwork.Destroy(this.gameObject);

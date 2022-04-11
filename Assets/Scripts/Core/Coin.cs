@@ -12,6 +12,9 @@ public class Coin : MonoBehaviourPunCallbacks
     private Collider skillCollider = null;
 
     [SerializeField]
+    private GameObject getCoinParticlePrefab = null;
+
+    [SerializeField]
     Vector4 randomSpawnBoundary = Vector4.zero;
 
     [SerializeField]
@@ -52,7 +55,7 @@ public class Coin : MonoBehaviourPunCallbacks
             }
         }
 
-        transform.Rotate(Vector3.forward * Time.deltaTime * rotateSpeed);
+        transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed);
     }
 
     private void RespawnSelf()
@@ -71,7 +74,7 @@ public class Coin : MonoBehaviourPunCallbacks
         transform.SetParent(null);
 
         transform.position = new Vector3(x, y, z);
-        transform.rotation = Quaternion.Euler(90, 0, Random.Range(0, 360));
+        transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
         GamePlayManager.Instance.CoinOwner = null;
     }
@@ -100,6 +103,8 @@ public class Coin : MonoBehaviourPunCallbacks
             transform.localPosition = Vector3.up * 3.5f;
 
             GamePlayManager.Instance.CoinOwner = playerModel.photonView.Owner.NickName;
+
+            Instantiate(getCoinParticlePrefab, other.transform.position - new Vector3(0f, 2f, 0f), other.transform.rotation);
         }
 
         /*

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: Kami
   SkillDescription: 
-  SkillIcon: {fileID: 2800000, guid: bd293dc32f4aaf94e8274f2fac2cdf89, type: 3}
+  SkillIcon: {fileID: 2800000, guid: 5ef5f8fac7284a7479e2ae841d7a1fd6, type: 3}
   SkillObj: {fileID: 3763615782507359825, guid: 404193f397895394aa6d80041ef368a3, type: 3}
   needTartgetToTrigger: 1
   shootable: 0

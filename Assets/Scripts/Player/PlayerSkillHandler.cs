@@ -18,6 +18,9 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
     [SerializeField]
     private SkillField[] skillFields = new SkillField[3];
 
+    [SerializeField]
+    private ParticleSystem explosionParticle = null;
+
     int selectedSkillIndex = 0;
 
     private void Start()
@@ -52,6 +55,11 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
         {
             if (skillFields[selectedSkillIndex].skillSO.needTartgetToTrigger)
             {
+                if (skillFields[selectedSkillIndex].skillSO.SkillName == "Explosion")
+                {
+                    photonView.RPC(nameof(DisplayExplosionRPC), RpcTarget.All);
+                }
+
                 Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
                 ray.origin = Camera.main.transform.position;
                 if (Physics.Raycast(ray, out RaycastHit hit))
@@ -63,7 +71,7 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
                         if (skillFields[selectedSkillIndex].skillSO.shootable)
                             skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
                         else
-                            skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), transform.position, transform.rotation, 0);
+                            skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), playerModel.transform.position, playerModel.transform.rotation, 0);
 
                         skillObj.GetComponent<INeedTarget>().Init(this.playerModel, playerModel);
                     }
@@ -112,5 +120,12 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
         }
 
         return false;
+    }
+
+    [PunRPC]
+    void DisplayExplosionRPC()
+    {
+        this.playerModel.Animator.SetTrigger("Explosion");
+        explosionParticle.Play();
     }
 }

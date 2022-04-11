@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillName: BannSyouTennBiki
   SkillDescription: 
-  SkillIcon: {fileID: 2800000, guid: 32b89b6ea76ac024080bdc3021421ca8, type: 3}
+  SkillIcon: {fileID: 2800000, guid: 8c9d3947c9265e24ba5aab161c067997, type: 3}
   SkillObj: {fileID: 6677782740750169009, guid: 6f83d9957d3887445ab4049605660908, type: 3}
   needTartgetToTrigger: 0
   shootable: 0

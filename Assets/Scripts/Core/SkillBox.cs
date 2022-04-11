@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillBall : MonoBehaviourPunCallbacks
+public class SkillBox : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private MeshRenderer meshRenderer = null;
     [SerializeField]
     private Collider skillCollider = null;
+
+    [SerializeField]
+    private ParticleSystem getSkillParticle = null;
 
     [SerializeField]
     SkillSO[] skillSOs = null;
@@ -70,6 +73,8 @@ public class SkillBall : MonoBehaviourPunCallbacks
     [PunRPC]
     void SetSelfActiveRPC(bool active)
     {
+        if(!active) getSkillParticle.Play();
+
         meshRenderer.enabled = active;
         skillCollider.enabled = active;
     }
@@ -85,7 +90,9 @@ public class SkillBall : MonoBehaviourPunCallbacks
             bool isAddSuccessfully = playerSkillHandler.AddSkill(skillSOs[randomSkillSOIndex], skillSOs[randomSkillSOIndex].GiveAmount);
 
             if (isAddSuccessfully)
+            {
                 SetSelfActive(false);
+            }
         }
     }
 }

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242a21863fdc5af4ba1246c3a1100326, type: 3}
+  m_Name: Chibakutensei
+  m_EditorClassIdentifier: 
+  SkillName: Chibakutensei
+  SkillDescription: 
+  SkillIcon: {fileID: 2800000, guid: 33a260c30ac0b4c4482d08740d90053a, type: 3}
+  SkillObj: {fileID: 3118497258621067803, guid: ea46f0d558cf5f345a608f3f45032d2c, type: 3}
+  needTartgetToTrigger: 0
+  shootable: 1
+  GiveAmount: 5
