@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5089,7 +5089,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.5
-      minScalar: 1.5
+      minScalar: 1.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5550,7 +5550,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 2.5
+      value: 1.5
       mode: 0
       spread: 0
       speed:
@@ -9603,7 +9603,7 @@ ParticleSystemRenderer:
   m_FreeformStretching: 0
   m_RotateWithStretchDirection: 1
   m_VertexStreams: 00010304
-  m_Mesh: {fileID: -5495902117074765545, guid: 130341cf12c836c4c9303afa53f60cf9, type: 3}
+  m_Mesh: {fileID: -5495902117074765545, guid: 2fcb3d605efbbce4cb5096a7ad2c7b10, type: 3}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -9892,7 +9892,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.6
+      scalar: 0.4
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -14439,7 +14439,7 @@ Transform:
   m_GameObject: {fileID: 2102889875817013587}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 2102889875647276291}
   - {fileID: 2102889876422453330}
@@ -20524,8 +20524,8 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.021787085, g: 0.5087202, b: 0.9622642, a: 0}
-        key1: {r: 0.20409395, g: 0.40993223, b: 0.9245283, a: 0.13725491}
-        key2: {r: 0, g: 0, b: 0, a: 0}
+        key1: {r: 0.20409395, g: 0.40993223, b: 0.9245283, a: 0.09803922}
+        key2: {r: 0, g: 0, b: 0, a: 0.13725491}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -20540,8 +20540,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 64379
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -20549,7 +20549,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
