@@ -47,4 +47,26 @@ public class PlayerAnimationHandler : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    public void TriggerAttack()
+    {
+        photonView.RPC(nameof(TriggerAttackRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void TriggerAttackRPC()
+    {
+        playerModel.Animator.SetTrigger("Attack");
+    }
+
+    public void TriggerSkill()
+    {
+        photonView.RPC(nameof(TriggerSkillRPC), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void TriggerSkillRPC()
+    {
+        playerModel.Animator.SetTrigger("Skill");
+    }
 }

@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 477180688530331667}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,6 +296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputHandler: {fileID: 477180688530331671}
+  animationHandler: {fileID: 477180688530331655}
   skillHandler: {fileID: -3288007274726749852}
   shootPoint: {fileID: 8540931265035287328}
 --- !u!114 &-3288007274726749852
@@ -310,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a713f371d5948b4587d8f0ad83f9030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerModel: {fileID: 477180688530331669}
   inputHandler: {fileID: 477180688530331671}
   skillFields:
   - skillSO: {fileID: 0}

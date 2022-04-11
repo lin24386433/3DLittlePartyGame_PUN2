@@ -10,6 +10,9 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
     public event Action<SkillField[]> OnSKillFieldsChanged = null;
 
     [SerializeField]
+    private PlayerModel playerModel = null;
+
+    [SerializeField]
     private PlayerInputHandler inputHandler = null;
 
     [SerializeField]
@@ -47,14 +50,36 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
 
         if (skillFields[selectedSkillIndex].skillSO != null && skillFields[selectedSkillIndex].Amount > 0)
         {
-            if(skillFields[selectedSkillIndex].skillSO.shootable)
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
+            if (skillFields[selectedSkillIndex].skillSO.needTartgetToTrigger)
+            {
+                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+                ray.origin = Camera.main.transform.position;
+                if (Physics.Raycast(ray, out RaycastHit hit))
+                {
+                    if (hit.collider.gameObject.TryGetComponent<PlayerModel>(out PlayerModel playerModel))
+                    {
+                        GameObject skillObj = null;
+
+                        if (skillFields[selectedSkillIndex].skillSO.shootable)
+                            skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
+                        else
+                            skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), transform.position, transform.rotation, 0);
+
+                        skillObj.GetComponent<INeedTarget>().Init(this.playerModel, playerModel);
+                    }
+                }
+            }
             else
-                PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), transform.position, transform.rotation, 0);
+            {
+                if (skillFields[selectedSkillIndex].skillSO.shootable)
+                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
+                else
+                    PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), transform.position, transform.rotation, 0);
+            }
 
             skillFields[selectedSkillIndex].Amount--;
 
-            if(skillFields[selectedSkillIndex].Amount == 0)
+            if (skillFields[selectedSkillIndex].Amount == 0)
             {
                 skillFields[selectedSkillIndex].skillSO = null;
             }

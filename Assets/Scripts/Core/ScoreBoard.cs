@@ -41,11 +41,16 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
     {
         canvasGroup.alpha = 1;
 
+        string coinOwnerName = GamePlayManager.Instance.CoinOwner;
+
         for (int i = 0; i < players.Length; i++)
         {
-            scoreBoardPlayerInfoCells[i].PlayerNameTxt.text = players[i].NickName.ToString();
-            if (players[i].CustomProperties.ContainsKey("Points"))
-                scoreBoardPlayerInfoCells[i].PlayerPointsTxt.text = ((int)players[i].CustomProperties["Points"]).ToString();
+            scoreBoardPlayerInfoCells[i].PlayerNameTxt.text = players[i].NickName;
+
+            if(coinOwnerName == players[i].NickName)
+                scoreBoardPlayerInfoCells[i].PlayerPointsTxt.text = "Owner";
+            else
+                scoreBoardPlayerInfoCells[i].PlayerPointsTxt.text = "";
         }
     }
 

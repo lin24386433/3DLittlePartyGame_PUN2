@@ -13,6 +13,9 @@ public class ShinraTensei : MonoBehaviourPunCallbacks
     private float range = 10f;
 
     [SerializeField]
+    private float hurtTime = 1f;
+
+    [SerializeField]
     private LayerMask affectLayer = default;
 
     private void Start()
@@ -48,7 +51,7 @@ public class ShinraTensei : MonoBehaviourPunCallbacks
             {
                 if (photonView.Owner == hurtHandler.photonView.Owner) continue;
 
-                hurtHandler.Hurt(photonView.Owner, transform.position, force, 1f);
+                hurtHandler.Hurt(photonView.Owner, transform.position, force, hurtTime);
             }
         }
     }

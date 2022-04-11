@@ -49,6 +49,21 @@ public class PlayerModel : MonoBehaviourPunCallbacks, IPunObservable
         Rigidbody.AddForce(force, forceMode);
     }
 
+    public Vector3 Position
+    {
+        get => transform.position;
+        set
+        {
+            photonView.RPC(nameof(SetPositionRPC), RpcTarget.All, value);
+        }
+    }
+
+    [PunRPC]
+    void SetPositionRPC(Vector3 value)
+    {
+        transform.position = value;
+    }
+
     public void AddPoints(int points)
     {
         if (!photonView.IsMine) return;

@@ -15,6 +15,8 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 
     public GameState State = GameState.CountDown;
 
+    public string CoinOwner = null;
+
     [SerializeField]
     private SystemMessage systemMessage = null;
     [SerializeField]
@@ -114,25 +116,14 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 
     void ShowWinner()
     {
-        int winnerIndex = 0;
-
-        int maxPoint = 0;
-
-        for(int i = 0; i < playersInRoom.Length; i++)
+        if(CoinOwner == null)
         {
-            int temp = 0;
-
-            if (playersInRoom[i].CustomProperties.ContainsKey("Points"))
-                temp = (int)playersInRoom[i].CustomProperties["Points"];
-
-            if(temp > maxPoint)
-            {
-                winnerIndex = i;
-                maxPoint = temp;
-            }
+            systemMessage.ShowMessages($"There is no Winner!");
         }
-
-        systemMessage.ShowMessages($"Winner is {playersInRoom[winnerIndex].NickName}");
+        else
+        {
+            systemMessage.ShowMessages($"Winner is {CoinOwner}!!");
+        }
 
         if (PhotonNetwork.IsMasterClient)
         {

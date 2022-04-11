@@ -52,6 +52,9 @@ MonoBehaviour:
   - SetSelfActiveRPC
   - SetPositionRPC
   - SetTranformRPC
+  - RespawnSelfRPC
+  - TriggerAttackRPC
+  - TriggerSkillRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -11,6 +11,9 @@ public class PlayerAttackHandler : MonoBehaviourPunCallbacks
     private PlayerInputHandler inputHandler = null;
 
     [SerializeField]
+    private PlayerAnimationHandler animationHandler = null;
+
+    [SerializeField]
     private PlayerSkillHandler skillHandler = null;
 
     [SerializeField]
@@ -23,10 +26,12 @@ public class PlayerAttackHandler : MonoBehaviourPunCallbacks
         if (inputHandler.IsNormalAttack)
         {
             NormalAttack();
+            animationHandler.TriggerAttack();
         }
         else if (inputHandler.IsSkillAttack)
         {
             skillHandler.UseSkill(shootPoint);
+            animationHandler.TriggerSkill();
         }
     }
 
