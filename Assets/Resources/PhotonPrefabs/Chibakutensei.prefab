@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3118497258621067803}
   m_LocalRotation: {x: -0, y: -0.8343591, z: -0, w: 0.5512214}
   m_LocalPosition: {x: 0, y: 3.85, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_Children:
   - {fileID: 3232467225330349487}
   m_Father: {fileID: 0}
@@ -97,7 +97,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3118497258621067802
 MonoBehaviour:
@@ -162,6 +162,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -5495902117074765545, guid: 2fcb3d605efbbce4cb5096a7ad2c7b10, type: 3}
+    - target: {fileID: 2102889875647276290, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2102889875817013587, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
       propertyPath: m_Name
       value: Chibakutensei
@@ -169,6 +173,18 @@ PrefabInstance:
     - target: {fileID: 2102889875817013590, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102889875817013590, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102889875817013590, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2102889875817013590, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2102889875817013590, guid: 3e1f9c8a1ba054349bf20c9489c39824, type: 3}
       propertyPath: m_LocalPosition.x
