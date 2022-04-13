@@ -30,23 +30,20 @@ public class Coin : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             RespawnSelf();
+            GamePlayManager.OnCountDown += RespawnSelf;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GamePlayManager.OnCountDown -= RespawnSelf;
         }
     }
 
     private void Update()
     {
-        /*if (PhotonNetwork.IsMasterClient)
-        {
-            timer += Time.deltaTime;
-
-            if (timer >= randomResetTime)
-            {
-                timer = 0f;
-                RespawnSelf();
-                randomResetTime = Random.Range(randomResetTimeBoundary.x, randomResetTimeBoundary.y);
-            }
-        }*/
-
         if (PhotonNetwork.IsMasterClient)
         {
             if (transform.position.y < 20f)
@@ -106,12 +103,5 @@ public class Coin : MonoBehaviourPunCallbacks
 
             Instantiate(getCoinParticlePrefab, other.transform.position - new Vector3(0f, 2f, 0f), other.transform.rotation);
         }
-
-        /*
-        if (other.TryGetComponent<PlayerModel>(out PlayerModel playerModel))
-        {
-            playerModel.AddPoints(1);
-            SetSelfActive(false);
-        }*/
     }
 }

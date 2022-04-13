@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 242a21863fdc5af4ba1246c3a1100326, type: 3}
+  m_Name: LimboHengoku
+  m_EditorClassIdentifier: 
+  SkillName: LimboHengoku
+  SkillDescription: 
+  SkillIcon: {fileID: 2800000, guid: 25534d7e0c9de5646aee54d576a28388, type: 3}
+  SkillObj: {fileID: 7975148816814360102, guid: 0ce5adb201ee7064fac8c4875d11c98c, type: 3}
+  needTartgetToTrigger: 0
+  shootable: 0
+  GiveAmount: 3

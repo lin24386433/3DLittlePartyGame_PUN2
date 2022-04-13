@@ -11,6 +11,10 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 {
     public static GamePlayManager Instance = null;
 
+    public static Action OnCountDown = null;
+    public static Action OnGaming = null;
+    public static Action OnEnded = null;
+
     Player[] playersInRoom;
 
     public GameState State = GameState.CountDown;
@@ -99,12 +103,13 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
 
     private void CountDownInit()
     {
-
+        OnCountDown?.Invoke();
     }
 
     private void GamingInit()
     {
         systemMessage.ShowMessages($"Start!!");
+        OnGaming?.Invoke();
     }
 
     private void EndedInit()
@@ -112,6 +117,7 @@ public class GamePlayManager : MonoBehaviourPunCallbacks
         systemMessage.ShowMessages($"Game Over!!");
 
         Invoke(nameof(ShowWinner), 1.5f);
+        OnEnded?.Invoke();
     }
 
     void ShowWinner()

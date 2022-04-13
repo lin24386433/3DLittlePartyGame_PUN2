@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d994c9dc41f31d449aba574f8d4eac1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackerAnimateTime: 2
   explodeTime: 1
   range: 10
   explodeParticle: {fileID: 5554439804473255804}

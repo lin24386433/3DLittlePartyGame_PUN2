@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: -50
-  range: 12
+  range: 15
   hurtTime: 1
   affectLayer:
     serializedVersion: 2

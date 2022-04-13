@@ -22,13 +22,27 @@ public class FloorManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.IsMasterClient) return;
 
         RecoverDestroyedFloor();
+
+        GamePlayManager.OnCountDown += ResetAllFloor;
+    }
+
+    private void OnDestroy()
+    {
+        GamePlayManager.OnCountDown -= ResetAllFloor;
+    }
+
+    void ResetAllFloor()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        RecoverFloors(destroyedFloors.ToArray());
     }
 
     private void RecoverDestroyedFloor()
     {
         if (!PhotonNetwork.IsMasterClient) return;
 
-        int randomRecoverCount = UnityEngine.Random.Range(1, destroyedFloors.Count / 15);
+        int randomRecoverCount = UnityEngine.Random.Range(1, destroyedFloors.Count / 12);
 
         List<int> recoverFloorIndexList = new List<int>();
 
@@ -42,7 +56,7 @@ public class FloorManager : MonoBehaviourPunCallbacks
 
         RecoverFloors(recoverFloorIndexList.ToArray());
 
-        Invoke(nameof(RecoverDestroyedFloor), UnityEngine.Random.Range(2f, 10f));
+        Invoke(nameof(RecoverDestroyedFloor), UnityEngine.Random.Range(2f, 8f));
     }
 
     #region - DestroyFloor -
@@ -54,7 +68,7 @@ public class FloorManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void DestroyFloorRPC(int index)
+    void DestroyFloorRPC(int index)
     {
         destroyedFloors.Add(index);
         destroyableFloors[index].gameObject.SetActive(false);
@@ -68,7 +82,7 @@ public class FloorManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void DestroyFloorsRPC(int[] indexArray)
+    void DestroyFloorsRPC(int[] indexArray)
     {
         for(int i = 0; i < indexArray.Length; i++)
         {
@@ -89,7 +103,7 @@ public class FloorManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RecoverFloorRPC(int index)
+    void RecoverFloorRPC(int index)
     {
         if (!destroyedFloors.Contains(index)) return;
 
@@ -105,7 +119,7 @@ public class FloorManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void RecoverFloorsRPC(int[] indexArray)
+    void RecoverFloorsRPC(int[] indexArray)
     {
         for (int i = 0; i < indexArray.Length; i++)
         {

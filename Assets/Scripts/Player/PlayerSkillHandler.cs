@@ -28,6 +28,13 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
         if (!photonView.IsMine) return;
 
         OnSKillFieldsChanged?.Invoke(skillFields);
+
+        GamePlayManager.OnCountDown += ResetSkills;
+    }
+
+    private void OnDestroy()
+    {
+        GamePlayManager.OnCountDown -= ResetSkills;
     }
 
     private void Update()
@@ -38,6 +45,17 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
         {
             SetSelectedSkillIndex(inputHandler.SelectedSkillIndex);
         }
+    }
+
+    void ResetSkills()
+    {
+        skillFields[0].skillSO = null;
+        skillFields[0].Amount = 0;
+        skillFields[1].skillSO = null;
+        skillFields[1].Amount = 0;
+        skillFields[2].skillSO = null;
+        skillFields[2].Amount = 0;
+        OnSKillFieldsChanged?.Invoke(skillFields);
     }
 
     public void SetSelectedSkillIndex(int value)
@@ -60,21 +78,25 @@ public class PlayerSkillHandler : MonoBehaviourPunCallbacks
                     photonView.RPC(nameof(DisplayExplosionRPC), RpcTarget.All);
                 }
 
-                Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-                ray.origin = Camera.main.transform.position;
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                PlayerModel hitPlayerModel = null;
+
+                for(int i = 0; i < 5; i++)
                 {
-                    if (hit.collider.gameObject.TryGetComponent<PlayerModel>(out PlayerModel playerModel))
-                    {
-                        GameObject skillObj = null;
+                    Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f + .5f * i, 0.5f + .5f * i));
+                    ray.origin = Camera.main.transform.position;
+                    if (Physics.Raycast(ray, out RaycastHit hit)) hitPlayerModel = hit.collider.GetComponent<PlayerModel>();
+                }
 
-                        if (skillFields[selectedSkillIndex].skillSO.shootable)
-                            skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
-                        else
-                            skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), playerModel.transform.position, playerModel.transform.rotation, 0);
+                if (hitPlayerModel != null)
+                {
+                    GameObject skillObj = null;
 
-                        skillObj.GetComponent<INeedTarget>().Init(this.playerModel, playerModel);
-                    }
+                    if (skillFields[selectedSkillIndex].skillSO.shootable)
+                        skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), skillTriggerTransform.position, skillTriggerTransform.rotation, 0);
+                    else
+                        skillObj = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", skillFields[selectedSkillIndex].skillSO.SkillName), hitPlayerModel.transform.position, hitPlayerModel.transform.rotation, 0);
+
+                    skillObj.GetComponent<INeedTarget>().Init(this.playerModel, hitPlayerModel);
                 }
             }
             else
