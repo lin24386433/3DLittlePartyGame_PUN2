@@ -17,6 +17,7 @@ public class PlayerModel : MonoBehaviourPunCallbacks, IPunObservable
     public bool IsHurt = false;
 
     public Player lastTookAttackPlayer = null;
+    public float lastTookAttackTime = 0f;
 
     private PlayerManager playerManager = null;
 
@@ -76,15 +77,32 @@ public class PlayerModel : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         Hashtable hash = new Hashtable();
-        hash.Add("Points", totalPoints);
+        hash.Add("Point", totalPoints);
         photonView.Owner.SetCustomProperties(hash);
     }
 
     void Die()
     {
-        Hashtable hash = new Hashtable();
-        hash.Add("Points", 0);
-        photonView.Owner.SetCustomProperties(hash);
+        if(lastTookAttackPlayer != null && (Time.time - lastTookAttackTime) <= 10f)
+        {
+            UIManager.Instance.KillMessenger.ShowKillMessages($"{lastTookAttackPlayer.NickName}  Killed  {photonView.Owner.NickName}");
+
+            Hashtable killHash = lastTookAttackPlayer.CustomProperties;
+            int kill = (int)killHash["Kill"];
+            killHash["Kill"] = kill + 1;
+            lastTookAttackPlayer.SetCustomProperties(killHash);
+        }
+        else
+        {
+            UIManager.Instance.KillMessenger.ShowKillMessages($"{photonView.Owner.NickName} is Dead");
+        }
+        lastTookAttackPlayer = null;
+
+        Hashtable deathHash = photonView.Owner.CustomProperties;
+        int death = (int)deathHash["Death"];
+        deathHash["Death"] = death + 1;
+        photonView.Owner.SetCustomProperties(deathHash);
+
         playerManager.Die();
     }
 

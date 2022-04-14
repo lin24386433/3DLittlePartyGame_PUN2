@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ShinraTensei
   m_EditorClassIdentifier: 
   SkillName: ShinraTensei
-  SkillDescription: 
-  SkillIcon: {fileID: 2800000, guid: 18496f6452c264148b71ef3cf7109edb, type: 3}
+  SkillDescription: Pop off all players around self postion.
+  SkillIcon: {fileID: 2800000, guid: fc321377b22482f4a9183843d921f7cc, type: 3}
   SkillObj: {fileID: 6677782740750169009, guid: 0c06f94f9b37b744aa322df5a7e05c39, type: 3}
   needTartgetToTrigger: 0
   shootable: 0

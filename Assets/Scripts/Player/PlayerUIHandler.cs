@@ -20,11 +20,18 @@ public class PlayerUIHandler : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        playerNameTxt.text = photonView.Owner.NickName;
+        if (!photonView.IsMine)
+        {
+            playerNameTxt.text = photonView.Owner.NickName;
 
-        if (!photonView.IsMine) return;
+            return;
+        }
+
+        playerNameTxt.text = "";
 
         uiManager = UIManager.Instance;
+
+        uiManager.PlayerNameTxt.text = photonView.Owner.NickName;
 
         skillHandler.OnSKillFieldsChanged += HandleSkillFieldsChanged;
     }

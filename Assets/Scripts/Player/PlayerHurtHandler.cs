@@ -25,6 +25,7 @@ public class PlayerHurtHandler : MonoBehaviourPunCallbacks
 
         playerModel.IsHurt = true;
         playerModel.lastTookAttackPlayer = attackPlayer;
+        playerModel.lastTookAttackTime = Time.time;
 
         Vector3 attackDirection = (attckPos - transform.position).normalized;
 

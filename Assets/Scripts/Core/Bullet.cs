@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviourPunCallbacks
 
     List<DestroyableFloor> floorsToDestroy = new List<DestroyableFloor>();
 
-    float timeToDestroyFloors = .1f;
+    [SerializeField] float timeToDestroyFloors = .1f;
     float timer = 0f;
 
     private void Start()

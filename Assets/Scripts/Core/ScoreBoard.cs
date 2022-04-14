@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ScoreBoard : MonoBehaviourPunCallbacks
 {
@@ -51,6 +52,13 @@ public class ScoreBoard : MonoBehaviourPunCallbacks
                 scoreBoardPlayerInfoCells[i].PlayerPointsTxt.text = "Owner";
             else
                 scoreBoardPlayerInfoCells[i].PlayerPointsTxt.text = "";
+
+            Hashtable deathHash = players[i].CustomProperties;
+            int kill = (int)deathHash["Kill"];
+            int death = (int)deathHash["Death"];
+
+            scoreBoardPlayerInfoCells[i].PlayerKillTxt.text = kill.ToString();
+            scoreBoardPlayerInfoCells[i].PlayerDeathTxt.text = death.ToString();
         }
     }
 

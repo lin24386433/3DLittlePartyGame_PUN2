@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Explosion
   m_EditorClassIdentifier: 
   SkillName: Explosion
-  SkillDescription: 
+  SkillDescription: Select a player and exlode.
   SkillIcon: {fileID: 2800000, guid: 6d9af6b5027e38644a1991c94b30b140, type: 3}
   SkillObj: {fileID: 8528273103185078013, guid: 2c95bbeca148947468998fb30238fad4, type: 3}
   needTartgetToTrigger: 1

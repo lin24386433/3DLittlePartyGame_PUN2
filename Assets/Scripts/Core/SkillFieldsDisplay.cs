@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class SkillFieldsDisplay : MonoBehaviour
 {
@@ -18,11 +19,22 @@ public class SkillFieldsDisplay : MonoBehaviour
     private Image[] skillIconImages = null;
     [SerializeField]
     private TMP_Text[] skillAmountTxts = null;
+    [SerializeField]
+    private CanvasGroup skillInfoCanvasGroup = null;
+    [SerializeField]
+    private TMP_Text skillNameTxt = null;
+    [SerializeField]
+    private TMP_Text skillDescriptionTxt = null;
 
     [SerializeField]
     private Color selectedColor = default;
     [SerializeField]
     private Color unSelectedColor = default;
+
+    private void Start()
+    {
+        skillInfoCanvasGroup.alpha = 0;
+    }
 
     public void SetSkillFields(SkillField[] skillFields)
     {
@@ -47,9 +59,23 @@ public class SkillFieldsDisplay : MonoBehaviour
 
     public void SetSelectedSkill(int selectedIndex)
     {
+        if (SelectedSkillIndex == selectedIndex) return;
+
         SelectedSkillIndex = selectedIndex;
 
-        for(int i = 0; i < SkillAmount; i++)
+        if (skillFields[SelectedSkillIndex].skillSO != null)
+        {
+            skillInfoCanvasGroup.alpha = 1;
+            DOTween.To(() => skillInfoCanvasGroup.alpha, x => skillInfoCanvasGroup.alpha = x, 0, 1.5f).SetEase(Ease.InQuart);
+            skillNameTxt.text = skillFields[SelectedSkillIndex].skillSO.SkillName;
+            skillDescriptionTxt.text = skillFields[SelectedSkillIndex].skillSO.SkillDescription;
+        }
+        else
+        {
+            skillInfoCanvasGroup.alpha = 0;
+        }
+
+        for (int i = 0; i < SkillAmount; i++)
         {
             if(selectedIndex == i)
             {

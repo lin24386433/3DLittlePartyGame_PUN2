@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HeavenTime
   m_EditorClassIdentifier: 
   SkillName: HeavenTime
-  SkillDescription: 
+  SkillDescription: All players in the specific area will stop in 3 time.
   SkillIcon: {fileID: 2800000, guid: 1ce616d446b0ef444b335b523de9fa94, type: 3}
   SkillObj: {fileID: 6677782740750169009, guid: 6937e1f5a37adf84cb4149104d813739, type: 3}
   needTartgetToTrigger: 0

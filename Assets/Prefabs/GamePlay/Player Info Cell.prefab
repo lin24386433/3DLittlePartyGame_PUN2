@@ -285,7 +285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1824088212706069323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -495,6 +495,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerNameTxt: {fileID: 1824088212407693957}
+  PlayerKillTxt: {fileID: 1824088214211394244}
+  PlayerDeathTxt: {fileID: 1824088212706069320}
   PlayerPointsTxt: {fileID: 1824088212378965530}
 --- !u!1 &1824088214211394246
 GameObject:
@@ -513,7 +515,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1824088214211394247
 RectTransform:
   m_ObjectHideFlags: 0

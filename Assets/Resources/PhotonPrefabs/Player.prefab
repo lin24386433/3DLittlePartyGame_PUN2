@@ -186,6 +186,7 @@ MonoBehaviour:
   Animator: {fileID: 6713457194728041984}
   IsGround: 0
   IsHurt: 0
+  lastTookAttackTime: 0
 --- !u!114 &477180688530331671
 MonoBehaviour:
   m_ObjectHideFlags: 0

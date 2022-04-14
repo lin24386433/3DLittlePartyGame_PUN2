@@ -15,11 +15,32 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-		if(photonView.IsMine)
-			CreateController();
+		if (!photonView.IsMine) return;
+
+		GamePlayManager.OnCountDown += ResetPlayerPoints;
+
+		CreateController();
+
+		ResetPlayerPoints();
 	}
 
-	void CreateController()
+    private void OnDestroy()
+    {
+		if (!photonView.IsMine) return;
+
+		GamePlayManager.OnCountDown -= ResetPlayerPoints;
+	}
+
+	void ResetPlayerPoints()
+    {
+		Hashtable hashTable = new Hashtable();
+		hashTable.Add("Kill", 0);
+		hashTable.Add("Death", 0);
+		hashTable.Add("Point", 0);
+		photonView.Owner.SetCustomProperties(hashTable);
+	}
+
+    void CreateController()
 	{
 		var spawnPoint = SpawnManager.Instance.GetRandomSpawnPoint();
 		

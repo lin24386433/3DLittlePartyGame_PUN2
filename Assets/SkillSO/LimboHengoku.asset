@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: LimboHengoku
   m_EditorClassIdentifier: 
   SkillName: LimboHengoku
-  SkillDescription: 
-  SkillIcon: {fileID: 2800000, guid: 25534d7e0c9de5646aee54d576a28388, type: 3}
+  SkillDescription: 'Summon 4 clones in 4 dimensions(Forward, Right , Back, Left),
+    which will go forward.
+
+    Other players who collide clones will be pop up with
+    hard force and can not see our clones.'
+  SkillIcon: {fileID: 2800000, guid: 9eddcd0c51a413a44825477d9b693417, type: 3}
   SkillObj: {fileID: 7975148816814360102, guid: 0ce5adb201ee7064fac8c4875d11c98c, type: 3}
   needTartgetToTrigger: 0
   shootable: 0
